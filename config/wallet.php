@@ -1,5 +1,14 @@
 <?php
 
 return [
-    'default_balance' => 10000
+
+    /*
+    |--------------------------------------------------------------------------
+    | Wallet Configuration
+    |--------------------------------------------------------------------------
+    |
+    | This value is the default balance set when a user is created
+    |
+    */
+    'default_balance' => 1000
 ];
