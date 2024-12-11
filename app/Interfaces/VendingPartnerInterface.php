@@ -9,5 +9,7 @@ interface VendingPartnerInterface
 {
     public function vendAirtime(array $data): array;
 
+    public function fetchTransactionStatus(string $reference): array;
+
     public function handleResponse($request): array;
 }

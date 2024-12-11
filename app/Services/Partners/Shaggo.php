@@ -42,6 +42,23 @@ class Shaggo implements VendingPartnerInterface
         return $this->handleResponse($request);
     }
 
+    /**
+     * @param string $reference
+     * @return array
+     * @throws Exception
+     */
+    public function fetchTransactionStatus(string $reference): array
+    {
+        $payload = [
+            'serviceCode' => 'QUB',
+            'reference' => $reference
+        ];
+
+        $request = $this->makeHttpRequest('public/api/test/b2b', 'post', $payload);
+
+        return $this->handleResponse($request);
+    }
+
     public function handleResponse($request): array
     {
         $response = $request->json();

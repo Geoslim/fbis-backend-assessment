@@ -42,6 +42,23 @@ class Bap implements VendingPartnerInterface
         return $this->handleResponse($request);
     }
 
+    /**
+     * @param string $reference
+     * @return array
+     * @throws Exception
+     */
+    public function fetchTransactionStatus(string $reference): array
+    {
+        $request = $this->makeHttpRequest(
+            'services/superagent/transaction/requery',
+            'get',
+            [],
+            ['agentReference' => $reference]
+        );
+
+        return $this->handleResponse($request);
+    }
+
     public function handleResponse($request): array
     {
         $response = $request->json();
@@ -56,7 +73,7 @@ class Bap implements VendingPartnerInterface
 
         return [
             'success' => true,
-            'response' => $response
+            'response' => $response['data']
         ];
     }
 }
