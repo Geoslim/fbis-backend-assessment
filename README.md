@@ -17,5 +17,5 @@ To start project, perform the following steps in the order
 - Fill your configuration settings in the '.env' file you created above
 - Create database
 - Run `php artisan key:generate`
-- Run `php artisan migrate`
+- Run `php artisan migrate --seed`
 - Run `php artisan serve`
