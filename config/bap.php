@@ -10,6 +10,6 @@
  */
 
 return [
-    'base_url' => env('BAP_BASE_URL', 'https://api.staging.baxibap.com'),
-    'api_key' => env('BAP_API_KEY', 'T7Wi2Q7tHFkq6sxU5WaUSBIGg3ynb96Qi74RnAeY6ys='),
+    'base_url' => env('BAP_BASE_URL', ''),
+    'api_key' => env('BAP_API_KEY', ''),
 ];

@@ -17,7 +17,7 @@ class Transaction extends Model
      */
     protected $fillable = [
         'user_id', 'wallet_id', 'type', 'amount', 'reference', 'status',
-        'network', 'provider', 'commission', 'description',
+        'network', 'partner', 'recipient', 'commission', 'description',
     ];
 
     public function user(): BelongsTo

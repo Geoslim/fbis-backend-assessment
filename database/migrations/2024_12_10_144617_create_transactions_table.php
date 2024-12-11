@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('network');
             $table->string('provider');
+            $table->string('recipient');
             $table->decimal('commission');
             $table->string('description');
             $table->softDeletes();
