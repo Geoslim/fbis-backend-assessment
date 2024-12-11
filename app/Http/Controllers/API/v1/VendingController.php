@@ -21,7 +21,9 @@ class VendingController extends Controller
     public function vendAirtime(VendingAirtimeRequest $request)
     {
         try {
-            $response = $this->vendingService->vendingAirtime($request->validated());
+            $user = $request->user();
+            $data = $request->validated();
+            $response = $this->vendingService->vendAirtime($data, $user);
             if (isset($response['error'])) {
                 return $this->error($response['error']);
             }

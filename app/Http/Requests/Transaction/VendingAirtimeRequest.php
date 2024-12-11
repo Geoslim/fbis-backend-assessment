@@ -18,7 +18,7 @@ class VendingAirtimeRequest extends FormRequest
     {
         return [
             'recipient' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'amount' => ['required', 'numeric', 'min:10'],
             'network' => ['required', 'string', Rule::in(NetworkProviders::cases())],
         ];
     }
