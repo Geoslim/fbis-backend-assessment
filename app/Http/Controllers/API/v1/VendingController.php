@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\API\v1;
 
+use App\Exceptions\WalletException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transaction\VendingAirtimeRequest;
+use App\Http\Resources\TransactionResource;
 use App\Services\VendingService;
 use App\Traits\JsonResponseTrait;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 
 class VendingController extends Controller
@@ -18,6 +20,10 @@ class VendingController extends Controller
     {
     }
 
+    /**
+     * @param VendingAirtimeRequest $request
+     * @return JsonResponse
+     */
     public function vendAirtime(VendingAirtimeRequest $request)
     {
         try {
@@ -27,8 +33,11 @@ class VendingController extends Controller
             if (isset($response['error'])) {
                 return $this->error($response['error']);
             }
-            return $this->successResponse($response['response']);
-        } catch (\Exception $e) {
+            return $this->successResponse(TransactionResource::make($response['transaction']));
+        } catch (WalletException $e) {
+            Log::error('airtime vending error:: ', [$e]);
+            return $this->error($e->getMessage());
+        } catch (Exception $e) {
             Log::error('airtime vending error:: ', [$e]);
             return $this->error('Unable to process airtime vending at this time. Kindly try again shortly.');
         }

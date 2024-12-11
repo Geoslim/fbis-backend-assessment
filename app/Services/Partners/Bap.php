@@ -4,10 +4,8 @@ namespace App\Services\Partners;
 
 use App\Enums\Status;
 use App\Interfaces\VendingPartnerInterface;
-use App\Models\Transaction;
 use App\Traits\MakesExternalRequest;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 
 class Bap implements VendingPartnerInterface
@@ -25,11 +23,10 @@ class Bap implements VendingPartnerInterface
 
     /**
      * @param array $data
-     * @param Transaction|Model $transaction
      * @return array
      * @throws Exception
      */
-    public function vendAirtime(array $data, Transaction|Model $transaction): array
+    public function vendAirtime(array $data): array
     {
         $payload = [
             'phone' => $data['recipient'],
@@ -37,23 +34,15 @@ class Bap implements VendingPartnerInterface
             'service_type' => $data['network'],
             'plan' => 'prepaid',
             'agentId' => '205',
-            'agentReference' => 'trx' . time()
+            'agentReference' => $data['reference']
         ];
 
         $request = $this->makeHttpRequest('services/airtime/request', 'post', $payload);
 
-        $response = $this->handleResponse($request);
-
-        if (isset($response['error'])) {
-            return $response;
-        }
-
-        // update transaction
-
-        return  $response;
+        return $this->handleResponse($request);
     }
 
-    private function handleResponse($request): array
+    public function handleResponse($request): array
     {
         $response = $request->json();
 

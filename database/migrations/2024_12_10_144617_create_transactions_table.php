@@ -22,10 +22,11 @@ return new class extends Migration
             $table->string('type');
             $table->string('status');
             $table->string('network');
-            $table->string('provider');
+            $table->string('partner');
             $table->string('recipient');
-            $table->decimal('commission');
+            $table->decimal('commission')->default(0);
             $table->string('description');
+            $table->json('response')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

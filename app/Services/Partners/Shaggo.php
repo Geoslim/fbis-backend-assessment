@@ -3,10 +3,8 @@
 namespace App\Services\Partners;
 
 use App\Interfaces\VendingPartnerInterface;
-use App\Models\Transaction;
 use App\Traits\MakesExternalRequest;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -25,35 +23,26 @@ class Shaggo implements VendingPartnerInterface
 
     /**
      * @param array $data
-     * @param Transaction|Model $transaction
      * @return array
      * @throws Exception
      */
-    public function vendAirtime(array $data, Transaction|Model $transaction): array
+    public function vendAirtime(array $data): array
     {
         $payload = [
             'phone' => $data['recipient'],
-            'amount' => (float)$data['amount'],
+            'amount' => $data['amount'],
             'network' => $data['network'],
             'vend_type' => 'VTU',
             'serviceCode' => 'QAB',
-            'request_id' => 'trx' . time(),
+            'request_id' => $data['reference']
         ];
 
         $request = $this->makeHttpRequest('public/api/test/b2b', 'post', $payload);
 
-        $response = $this->handleResponse($request);
-
-        if (isset($response['error'])) {
-            return $response;
-        }
-
-        // update transaction
-
-        return  $response;
+        return $this->handleResponse($request);
     }
 
-    private function handleResponse($request): array
+    public function handleResponse($request): array
     {
         $response = $request->json();
 

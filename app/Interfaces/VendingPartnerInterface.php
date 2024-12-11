@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 interface VendingPartnerInterface
 {
-    public function vendAirtime(array $data, Transaction|Model $transaction);
+    public function vendAirtime(array $data): array;
+
+    public function handleResponse($request): array;
 }
