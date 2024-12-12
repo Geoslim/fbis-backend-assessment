@@ -14,7 +14,7 @@ This is an Airtime Vending Service built using Laravel, providing an API endpoin
 
 - PHP v8.3
 - (Used SQLite for this implementation. can be placed in the database directory as `database.sqlite`) but MySQL or any compatible database is allowed 
-- You can set QUEUE_CONNECTION=sync
+- Redis (if available) for background jobs. (you can set QUEUE_CONNECTION=sync as well)
 
 ## Start up
 
