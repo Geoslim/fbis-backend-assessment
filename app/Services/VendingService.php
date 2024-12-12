@@ -22,7 +22,7 @@ class VendingService
         public WalletService $walletService,
         public TransactionService $transactionService
     ) {
-        $this->partner = config('partner.default');
+        $this->partner = config('vending.partner');
         $this->vendingServicePartner = VendingPartnerFactory::create($this->partner);
     }
 

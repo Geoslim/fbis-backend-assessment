@@ -18,7 +18,12 @@ class VendingAirtimeRequest extends FormRequest
     {
         return [
             'recipient' => ['required', 'string'],
-            'amount' => ['required', 'numeric', 'min:10'],
+            'amount' => [
+                'required',
+                'numeric',
+                'min:' . config('vending.minimum_amount'),
+                'max:' . config('vending.maximum_amount'),
+            ],
             'network' => ['required', 'string', Rule::in(NetworkProviders::cases())],
         ];
     }
@@ -27,7 +32,10 @@ class VendingAirtimeRequest extends FormRequest
     {
         return [
             'network.in' => 'The selected network provider is not supported. Kindly select one of '
-                . implode(', ', array_map(fn($provider) => $provider->value, NetworkProviders::cases()))
+                . implode(', ', array_map(fn($provider) => $provider->value, NetworkProviders::cases())),
+
+            'amount.min' => 'The minimum amount allowed is ' . config('vending.minimum_amount'),
+            'amount.max' => 'The maximum amount allowed is ' . config('vending.maximum_amount'),
         ];
     }
 }
