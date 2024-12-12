@@ -87,13 +87,13 @@ Login : POST
 
 Fetch Wallet Balance : GET
 ```http
-GET: {{baseUrl}}/api/v1/wallet
+{{baseUrl}}/api/v1/wallet
 Accept: application/json
 Authorization: ••••••
 ```
 
 Vend Airtime : POST
-```http
+```php
 {{baseUrl}}/api/v1/transactions/vend-airtime
 Accept: application/json
 Authorization: ••••••
