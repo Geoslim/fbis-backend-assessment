@@ -54,7 +54,7 @@ The default balance for new users is defined in ```config/wallet.php```.
 - 'default_balance' => 1000
 ```
 
-### API Usage (Showing only major endpoints)
+## API Usage (Showing only major endpoints)
 Application utilizes Laravel Sanctum for authentication. So make use of the token generated at sign up / login.
 - Include token as bearer token
 - Make use of the following endpoints to test the application
