@@ -3,33 +3,27 @@
 namespace App\Services;
 
 use App\Enums\Status;
-use App\Enums\VendingPartners;
 use App\Exceptions\WalletException;
+use App\Factories\VendingPartnerFactory;
+use App\Interfaces\VendingPartnerInterface;
 use App\Jobs\UpdateTransactionStatus;
 use App\Models\Transaction;
 use App\Models\User;
-use App\Services\Partners\Bap;
-use App\Services\Partners\Shaggo;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Support\Facades\DB;
 
 class VendingService
 {
-    private Bap|Shaggo $vendingServicePartner;
+    private VendingPartnerInterface $vendingServicePartner;
 
     private string $partner;
 
     public function __construct(
         public WalletService $walletService,
-        public TransactionService $transactionService,
-        public CommissionService $commissionService
+        public TransactionService $transactionService
     ) {
         $this->partner = config('partner.default');
-        $this->vendingServicePartner = match ($this->partner) {
-            VendingPartners::BAP->value => new Bap(),
-            VendingPartners::SHAGGO->value => new Shaggo(),
-            default => throw new \InvalidArgumentException()
-        };
+        $this->vendingServicePartner = VendingPartnerFactory::create($this->partner);
     }
 
     /**

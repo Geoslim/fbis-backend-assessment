@@ -14,5 +14,5 @@ return [
     |
     */
 
-    'default' => VendingPartners::SHAGGO->value
+    'default' => VendingPartners::BAP->value
 ];

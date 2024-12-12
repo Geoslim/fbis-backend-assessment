@@ -11,6 +11,7 @@ use App\Traits\JsonResponseTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
+use InvalidArgumentException;
 
 class VendingController extends Controller
 {
@@ -33,8 +34,9 @@ class VendingController extends Controller
             if (isset($response['error'])) {
                 return $this->error($response['error']);
             }
+            Log::debug('airtime vending success response:: ', [$response]);
             return $this->successResponse(TransactionResource::make($response['transaction']));
-        } catch (WalletException $e) {
+        } catch (WalletException|InvalidArgumentException $e) {
             Log::error('airtime vending error:: ', [$e]);
             return $this->error($e->getMessage());
         } catch (Exception $e) {

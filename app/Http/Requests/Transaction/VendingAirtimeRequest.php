@@ -22,4 +22,12 @@ class VendingAirtimeRequest extends FormRequest
             'network' => ['required', 'string', Rule::in(NetworkProviders::cases())],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'network.in' => 'The selected network provider is not supported. Kindly select one of '
+                . implode(', ', array_map(fn($provider) => $provider->value, NetworkProviders::cases()))
+        ];
+    }
 }
