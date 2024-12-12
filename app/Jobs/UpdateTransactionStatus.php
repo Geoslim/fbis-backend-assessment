@@ -37,6 +37,7 @@ class UpdateTransactionStatus implements ShouldQueue
             Log::debug("Transaction re-query", [$this->transaction, $response]);
 
             if (
+                ($this->transaction->status == Status::PENDING) &&
                 (isset($response['response']['status']) && $response['response']['status'] == '200') ||
                 (isset($response['response']['statusCode']) && $response['response']['statusCode'] == '0')
             ) {
