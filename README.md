@@ -62,7 +62,7 @@ Application utilizes Laravel Sanctum for authentication. So make use of the toke
 Base url = ```http://127.0.0.1:8000```
 
 Sign Up : POST
-```http
+```bash
 {{baseUrl}}/api/v1/auth/register
 ````
 ```json
@@ -75,7 +75,7 @@ Sign Up : POST
 ```
 
 Login : POST
-```http
+```bash
 {{baseUrl}}/api/v1/auth/login
 ````
 ```json
@@ -86,14 +86,14 @@ Login : POST
 ```
 
 Fetch Wallet Balance : GET
-```http
+```bash
 {{baseUrl}}/api/v1/wallet
 Accept: application/json
 Authorization: ••••••
 ```
 
 Vend Airtime : POST
-```php
+```bash
 {{baseUrl}}/api/v1/transactions/vend-airtime
 Accept: application/json
 Authorization: ••••••
