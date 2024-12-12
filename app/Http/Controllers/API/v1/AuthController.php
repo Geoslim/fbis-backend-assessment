@@ -11,7 +11,6 @@ use App\Traits\JsonResponseTrait;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
 
@@ -33,12 +32,7 @@ class AuthController extends Controller
         try {
             $response = $this->authService->register($request->validated());
             return $this->successResponse($response);
-        } catch (AuthException $e) {
-            Log::error('User unable to sign up:: ', [$e]);
-            DB::rollBack();
-            return $this->error($e->getMessage());
-        } catch (Exception $e) {
-            DB::rollBack();
+        } catch (Throwable $e) {
             Log::error('User unable to sign up:: ', [$e]);
             return $this->error('Unable to complete your registration at this time. Kindly try again shortly.');
         }
@@ -56,7 +50,7 @@ class AuthController extends Controller
         } catch (AuthException $e) {
             Log::error('User unable to sign in:: ', [$e]);
             return $this->error($e->getMessage());
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             Log::error('User unable to sign in:: ', [$e]);
             return $this->error('Unable to log in at this time. Kindly try again shortly.');
         }

@@ -19,11 +19,11 @@ class WalletService
 
     /**
      * @param int|string $userId
-     * @return mixed
+     * @return Wallet
      */
-    public function walletQuery(int|string $userId)
+    public function fetchWallet(int|string $userId): Wallet
     {
-        return Wallet::query()->whereUserId($userId);
+        return Wallet::query()->whereUserId($userId)->first();
     }
 
     /**

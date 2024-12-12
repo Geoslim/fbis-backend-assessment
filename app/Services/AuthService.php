@@ -12,7 +12,7 @@ use Throwable;
 
 class AuthService
 {
-    public function __construct(public WalletService $walletService)
+    public function __construct(public UserService $userService)
     {
         //
     }
@@ -20,26 +20,19 @@ class AuthService
     /**
      * @param array $data
      * @return array
-     * @throws Exception|Throwable
+     * @throws Throwable
      */
     public function register(array $data): array
     {
-        DB::beginTransaction();
+        try {
+            // user onboarding
+            $user = $this->userService->onboardUser($data);
 
-        $user = User::create($data);
-
-        // create default wallet
-        $wallet = $this->walletService->createWallet($user);
-
-        // default wallet deposit
-        $this->walletService->processCredit($wallet, config('wallet.default_balance'));
-
-        $response['token'] = $user->createToken($user->email)->plainTextToken;
-        $response['user'] = UserResource::make($user);
-
-        DB::commit();
-
-        return $response;
+            return $this->generateAuthResponse($user);
+        } catch (Throwable $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     /**
@@ -57,10 +50,20 @@ class AuthService
             );
         }
 
-        $response['token'] = $user->createToken($user->email)->plainTextToken;
-        $response['user'] = UserResource::make($user);
+        return $this->generateAuthResponse($user);
+    }
 
-        return $response;
+
+    /**
+     * @param User $user
+     * @return array
+     */
+    private function generateAuthResponse(User $user): array
+    {
+        return [
+            'token' => $user->createToken($user->email)->plainTextToken,
+            'user' => UserResource::make($user),
+        ];
     }
 
     /**

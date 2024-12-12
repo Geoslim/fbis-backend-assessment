@@ -10,8 +10,9 @@ return [
     |
     | This configuration option specifies the default Vending Partner to be used
     | for airtime vending operations.
+    | Currently supporting SHAGGO & BAP
     |
     */
 
-    'default_vending_partner' => VendingPartners::BAP->value
+    'default' => VendingPartners::SHAGGO->value
 ];

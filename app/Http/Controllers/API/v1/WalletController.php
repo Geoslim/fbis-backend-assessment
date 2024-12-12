@@ -21,7 +21,7 @@ class WalletController extends Controller
     public function index(Request $request): JsonResponse
     {
        try {
-           $wallet = $this->walletService->walletQuery($request->user()->id)->first();
+           $wallet = $this->walletService->fetchWallet($request->user()->id);
 
            return $this->successResponse(
                WalletResource::make($wallet)
